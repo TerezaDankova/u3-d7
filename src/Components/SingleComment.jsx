@@ -1,9 +1,8 @@
 import {ListGroup,Button} from "react-bootstrap"
-import { Component } from "react"
 
-class SingleComment extends Component {
+const SingleComment = (props) => {
 
-    deleteComment = async (asin) => {
+    const deleteComment = async (asin) => {
         try {
         let response = await fetch ('https://striveschool-api.herokuapp.com/api/comments/' + asin , {
             method: 'DELETE',
@@ -13,7 +12,7 @@ class SingleComment extends Component {
         })
         if(response.ok) {
             alert('Your comment was deleted')
-            this.props.didDeleteComment()
+            props.didDeleteComment()
         }
         else {
             alert('There is some problem, you cannot delete your comment!')
@@ -24,12 +23,15 @@ class SingleComment extends Component {
         }
     }
     
-    render() {
-        return <ListGroup.Item className="mt-2 mb-2 ml-5" style={{backgroundColor: '#F3F2F1'}}>
-            <span className="mr-2"style={{fontWeight: 'bold'}}>COMMENT:</span><br />{this.props.comment.comment}<br />
-            <Button variant="danger" className="ml-2 mt-2" onClick={() => this.deleteComment(this.props.comment._id)}>DELETE</Button>
+    
+        return (
+        
+        <ListGroup.Item className="mt-2 mb-2 ml-5" style={{backgroundColor: '#F3F2F1'}}>
+            <span className="mr-2"style={{fontWeight: 'bold'}}>COMMENT:</span><br />{props.comment.comment}<br />
+            <Button variant="danger" className="ml-2 mt-2" onClick={() => deleteComment(props.comment._id)}>DELETE</Button>
         </ListGroup.Item>
-    }
+        )
+            
 }
 
 export default SingleComment
